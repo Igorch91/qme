@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %} Измерительное оборудование {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+
+<div style="display:inline-block">
+  <form action="all">
+	<button type="submit">Показать все</button>
+</form>
+</div>
+
+<div style="display:inline-block">
+  <form action="firstday">
+  	
+	
+	<button type="submit">Первый калибровочный день</button>
+</form>
+</div>
+
+<div style="display:inline-block">
+  <form  action="secondday">
+  	
+  	
+	<button type="submit">Второй калибровочный день</button>
+</form>
+</div>
+
+<div style="display:inline-block">
+  <form action="dataview">
+    
+    
+  <button type="submit">Посмотреть данные</button>
+</form>
+</div>
+
+
+
+<form method="post">
+{% csrf_token %}
+<input type = "hidden" name="data" value ="Save">
+<table>
+<tr><th>Оборудование</th><th>Вес</th><th>Дл. окр. №1</th><th>Дл. окр. №2</th><th>PD</th><th>Vent</th><th>Отключена</th></tr>
+{% for e in context %}
+<tr  height ="35">
+	<td>{{e.equipment_name.label}}{{e.equipment_name.as_hidden}}</td>
+	<td>{{e.weight_value}}</td>
+	<td>{{e.size_one_value}}</td>
+  <td>{{e.size_two_value}}</td>
+  <td>{{e.airPd_value}}</td>
+  <td>{{e.airVent_value}}</td>
+  <td><input type="checkbox" onclick = "ClickOff(this)"></td>
+</tr>
+{% endfor %}
+
+</table>
+<input type="submit"  value = "Сохранить">
+
+
+
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+  
+
+{% if user.is_authenticated %}
+     <li>Пользователь: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>   
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>   
+   {% endif %} 
+
+
+
+<div align = "center">
+ 
+  <p>Designed by Igor Chesnov</p>
+  <address>igor.chesnov@jti.com</address>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+tablemain=document.body.children[5].children[2].children[0];
+
+for (let i=1; i<tablemain.childElementCount; i++ )
+
+ 
+{ tablemain.children[i].children[1].children[0].step=0.001;
+  tablemain.children[i].children[1].children[0].size=1;
+  tablemain.children[i].children[3].children[0].step=0.01;
+  tablemain.children[i].children[4].children[0].step=1;
+  tablemain.children[i].children[5].children[0].step=0.1;
+	str = tablemain.children[i].children[0].textContent;
+	if (str.match(/SDL/) == null)
+	{tablemain.children[i].children[2].children[0].step=0.01;}
+	else 
+	{tablemain.children[i].children[2].children[0].step=0.001;
+  tablemain.children[i].children[3].children[0].disabled=true;}
+		
+}
+
+trcolor=document.body.children[5].children[2].children[0]
+
+for (let i=1; i<trcolor.childElementCount; i++)
+
+{
+trcolor.children[i].bgColor="MediumSeaGreen";
+i++;
+
+}
+
+   document.addEventListener('wheel', function(event)
+    {
+
+    console.log(event.deltaX, event.deltaY);
+});
+
+
+function ClickOff(a) {
+      
+      
+      row=a.parentNode.parentNode.rowIndex;
+      bool = a.checked;
+      
+
+      stroke = tablemain.rows[row];
+
+      for (let i = 0; i < 6; i++)
+        {
+          if (stroke.children[i].children[0].value != "")
+          {
+          stroke.children[i].children[0].disabled=bool;
+        }
+        }
+    }
+
+$(document).ready(function(){
+  $("input").hover(function(){
+    $(this).focus();
+    });
+});
+</script>
+
+
+  
+
+
+{% endblock %}

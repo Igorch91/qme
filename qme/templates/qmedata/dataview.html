@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Измерительное оборудование {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+
+<form action="/qmedata">
+	<button type="submit">Таблица для заполнения</button>
+</form>
+
+
+<form method="post">
+{% csrf_token %}
+{{form}}
+<input type="submit"  value = "Поиск">
+</form>
+{% if form_data %}
+<table>
+	<caption><h1>{{form_data.1.equipment}}</h1></caption>
+<tr><th>Вес</th><th>Дл.окр.№1</th><th>Дл.окр.№2</th><th>PD</th><th>Vent</th><th>Дата</th><th>Время</th><th>Специалист</th>
+
+{% for e in form_data %}
+	<tr>
+		
+		<td>{{e.weight}}</td>
+		<td>{{e.size_one}}</td>
+		<td>{{e.size_two}}</td>
+		<td>{{e.airPD}}</td>
+		<td>{{e.airVent}}</td>
+		<td>{{e.data_messure}}</td>
+		<td>{{e.time_messure}}</td>
+		<td>{{e.name_user}}</td>
+
+
+		
+				
+	</tr>
+	{% endfor %}
+	
+
+
+</table>
+
+
+{% endif %}
+
+{% if user.is_authenticated %}
+     <li>Пользователь: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>   
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>   
+   {% endif %} 
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div align = "center">
+ 
+  <p>Designed by Igor Chesnov</p>
+  <address>igor.chesnov@jti.com</address>
+
+</div>
+ {% endblock %}
