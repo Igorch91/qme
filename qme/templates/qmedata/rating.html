@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %} Измерительное оборудование {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+
+
+
+
+
+
+
+<div style="display:inline-block">
+  <form action="dataview">
+    
+    
+  <button type="submit">Назад</button>
+</form>
+</div>
+
+
+
+
+<h1>{{Message}}</h1>
+
+<table>
+<tr><th>Оборудование</th><th>Большое отклонение (кол-во. раз)</th>
+{% for r in Rating %}
+<tr bgcolor="" height ="20">
+	<td>{{r.equipment_name}}</td>
+	<td align = "center">{{r.rating}}</td>
+
+</tr>
+
+
+
+{% endfor %}
+
+</table>
+
+
+
+
+
+
+
+  
+
+{% if user.is_authenticated %}
+     <li>Пользователь: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>   
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>   
+   {% endif %} 
+
+
+
+<div align = "center">
+ 
+  <p>Designed by Igor Chesnov</p>
+  <address>igor.chesnov@jti.com</address>
+
+</div>
+
+<script>
+count = document.body.children[3].children[0].childElementCount;
+max = document.body.children[3].children[0].children[1].children[1].textContent;
+porog = 8;
+for (let i=1; i<count; i++)
+{
+  
+  value = document.body.children[3].children[0].children[i].children[1].textContent;
+  proc = (value/porog)*100;
+  document.body.children[3].children[0].children[i].bgColor=Color(proc);
+
+
+}
+
+function Color(proc)
+{
+  
+  if (proc >= 90)
+  {
+    cvet='FF0000';
+  }
+  if (proc < 90 && proc >= 80)
+  {
+    cvet='FF4600';
+  }
+  if (proc < 80 && proc >= 70)
+  {
+    cvet='FF8C00';
+  }
+  if (proc < 70 && proc >= 60)
+  {
+    cvet='FFD200';
+  }
+  if (proc < 60 && proc >= 50)
+  {
+    cvet='FFFF00';
+  }
+  if (proc < 50 && proc >= 40)
+  {
+    cvet='AAFF00';
+  }
+  if (proc < 40 && proc >= 30)
+  {
+    cvet='6EFF00';
+  }
+  if (proc < 30 && proc >= 20)
+  {
+    cvet='46FF00';
+  }
+  if (proc < 10 && proc >= 0)
+  {
+    cvet='00FF00';
+  }
+
+return cvet;
+
+}
+
+</script>
+
+
+  
+
+
+{% endblock %}
