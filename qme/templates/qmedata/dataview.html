@@ -5,11 +5,19 @@
 {% block content %}
 {% csrf_token %}
 
-
+<div style="display:inline-block">
 <form action="/qmedata">
 	<button type="submit">Таблица для заполнения</button>
 </form>
+</div>
 
+<div style="display:inline-block">
+  <form action="rating">
+    
+    
+  <button type="submit">Антирейтинг</button>
+</form>
+</div>
 
 <form method="post">
 {% csrf_token %}

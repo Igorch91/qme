@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .forms import DataForm, SerchForm
-from .models import Equipment, Measurements, Calibr
+from .models import Equipment, Measurements, Calibr, Deviations
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.formats import sanitize_separators
@@ -17,7 +17,6 @@ def index(request):
 def all(request):
 	if request.user.is_authenticated == True:
 		if request.method == 'GET':
-			a='First'
 			context = show(None)
 			return render(request, 'qmedata/list.html',{'context':context})
 	else:
@@ -59,9 +58,61 @@ def savedata(content, user):
 		MyData.data_messure = now()
 		MyData.time_messure = now()
 		MyData.name_user = user
-		
+		comparision(MyData)
 		MyData.save()
 				
+
+def comparision(data_equipment):
+	rating = data_equipment.equipment.rating
+	if data_equipment.equipment.group_weight == False:
+		difference = abs(round(float(data_equipment.weight) - Calibr.objects.get(calibr_name="Индивидуальный вес").value_calibr,3 ))
+		abs(difference)
+		if difference > Deviations.objects.get(pk=1).dev_ind_weight:
+			rating = rating + 1	
+	else:
+		difference = abs(round(float(data_equipment.weight) - Calibr.objects.get(calibr_name="Групповой вес").value_calibr,3 ))
+		
+		if difference > Deviations.objects.get(pk=1).dev_grp_weight:
+	 		rating = rating + 1	
+	#print (rating)
+	if data_equipment.equipment.this_is_sdl == True:
+		difference = abs(round(float(data_equipment.size_one) - Calibr.objects.get(calibr_name="SizeSdl").value_calibr,3 ))
+		if difference > Deviations.objects.get(pk=1).dev_sdl_size:
+			rating = rating + 1
+	else:
+		difference = abs(round(float(data_equipment.size_one) - Calibr.objects.get(calibr_name="SizeOne").value_calibr,2 ))
+		if difference > Deviations.objects.get(pk=1).dev_one_size:
+			rating = rating + 1
+
+	if data_equipment.size_two != None:
+		difference = abs(round(float(data_equipment.size_two) - Calibr.objects.get(calibr_name="SizeTwo").value_calibr,2 ))
+		if difference > Deviations.objects.get(pk=1).dev_two_size:
+			rating = rating + 1
+
+	if data_equipment.equipment.type_equipment == 'Cig':
+		difference = abs(round(float(data_equipment.airPD) - Calibr.objects.get(calibr_name="PD Cig").value_calibr,0 ))
+		if difference > Deviations.objects.get(pk=1).dev_sig_pd:
+			rating = rating + 1
+	if data_equipment.equipment.type_equipment == 'Filter':
+		difference = abs(round(float(data_equipment.airPD) - Calibr.objects.get(calibr_name="PD filter").value_calibr,0 ))
+		if difference > Deviations.objects.get(pk=1).dev_fil_pd:
+			rating = rating + 1
+
+	if data_equipment.airVent != None:
+		difference = abs(round(float(data_equipment.airVent) - Calibr.objects.get(calibr_name="Vent").value_calibr,1 ))
+		if difference > Deviations.objects.get(pk=1).dev_vent:
+			rating = rating + 1
+
+	if data_equipment.equipment.rating != rating:
+		Equipment.objects.filter(pk=data_equipment.equipment.id).update(rating = rating)
+		print (Equipment.objects.get(pk=data_equipment.equipment.id).rating)
+	
+
+
+
+
+
+
 def firstday(request):
 	
 	if request.user.is_authenticated == True:
@@ -104,8 +155,6 @@ def dataview(request):
 
 		form_data = Measurements.objects.filter(equipment=index_equipment).order_by('-data_messure').order_by('-time_messure')
 						
-		
-
 
 		messages.success(request, 'Данные представлены')
 		
@@ -120,6 +169,18 @@ def dataview(request):
 			return render(request, 'qmedata/dataview.html', {'Message':Message, 'form':form}  )
 		else:
 			return redirect('/accounts/login/')	
+
+def rating(request):
+
+	if request.method == 'GET':
+		if request.user.is_authenticated == True:
+			Message = "Антирейтинг"
+			rating = Equipment.objects.all().order_by('-rating')
+
+			return render(request, 'qmedata/rating.html', {'Message':Message, 'Rating':rating})
+		else:
+			return redirect('/accounts/login/')	
+
 
 def show(a):
 	#print(a)

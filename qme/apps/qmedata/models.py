@@ -7,9 +7,10 @@ class Equipment(models.Model):
 	this_is_sdl = models.BooleanField()
 	type_equipment_choices = (('Cig','Измеряет сигареты'),('Filter','Измеряет фильтра'))
 	type_equipment = models.CharField('Тип измерений', max_length=6, choices=type_equipment_choices)
-	place_equipment_choices = (('First','Первый день'),('Second','Второй день'))
+	place_equipment_choices = (('First','Первый день'),('Second','Второй день'),('NoActive','Не активна'))
 	place_equipment = models.CharField('Калибровочный день', max_length=30, choices=place_equipment_choices)
-	
+	rating = models.IntegerField(default=0)
+
 	def __str__(self):
 		return self.equipment_name
 
@@ -49,3 +50,20 @@ class Calibr(models.Model):
 		unique_together = ['calibr_name']
 
 
+class Deviations(models.Model):
+	dev_ind_weight = models.FloatField(default=0.005)
+	dev_grp_weight = models.FloatField(default=0.009)
+	dev_sdl_size = models.FloatField(default=0.004)
+	dev_one_size = models.FloatField(default=0.04)
+	dev_two_size = models.FloatField(default=0.04)
+	dev_sig_pd = models.FloatField(default = 4)
+	dev_fil_pd = models.FloatField(default = 8)
+	dev_vent = models.FloatField(default = 1)
+
+	def __str__(self):
+		return str("Отклонения")
+
+	class Meta:
+		verbose_name = 'Отклонение'
+		verbose_name_plural = 'Отклонения'
+		
