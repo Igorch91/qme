@@ -4,37 +4,46 @@
 
 {% block content %}
 {% csrf_token %}
+{% load static %}
 
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+<div class="divhead">QME PORTAL</div>
 
-
-
-
-
-
-
-<div style="display:inline-block">
-  <form action="dataview">
+<div class="leftcolon"> 
+<div class="widget">
+  <h3 class="widget-title">Меню:</h3>
+  <ul class="widget-list">
+    <li><a href="">Список стоек</a></li>
     
-    
-  <button type="submit">Назад</button>
-</form>
+    <li><a href="firstday">Калибровка</a></li>
+    <li><a href="dataview">База данных</a></li>
+    <li><a href="rating">Антирейтинг</a></li>
+   
+  </ul>
+  {% if user.is_authenticated %}
+  <h3 class="widget-title">Пользователь:</h3>
+  <ul class="widget-list">
+    <li><a href="">{{user.get_username}}</a></li>
+    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li> 
+  </ul>
+  {% endif %} 
 </div>
+</div>
+  
+<div class ="rightcolon">
+  <h2 style="padding-left: 50px;
+padding-top: 50px">Анти-рейтинг</h2>
 
 
 
-
-<h1>{{Message}}</h1>
-
-<table>
+<table id = "tableraiting"  style="padding-left: 30px; padding-top:10px">
 <tr><th>Оборудование</th><th>Большое отклонение (кол-во. раз)</th>
 {% for r in Rating %}
 <tr bgcolor="" height ="20">
-	<td>{{r.equipment_name}}</td>
-	<td align = "center">{{r.rating}}</td>
+  <td>{{r.equipment_name}}</td>
+  <td align = "center">{{r.rating}}</td>
 
 </tr>
-
-
 
 {% endfor %}
 
@@ -45,17 +54,8 @@
 
 
 
-
   
-
-{% if user.is_authenticated %}
-     <li>Пользователь: {{ user.get_username }}</li>
-     <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>   
-   {% else %}
-     <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>   
-   {% endif %} 
-
-
+</div>
 
 <div align = "center">
  
@@ -65,15 +65,15 @@
 </div>
 
 <script>
-count = document.body.children[3].children[0].childElementCount;
-max = document.body.children[3].children[0].children[1].children[1].textContent;
+count = tableraiting.children[0].childElementCount;
+
 porog = 8;
 for (let i=1; i<count; i++)
 {
   
-  value = document.body.children[3].children[0].children[i].children[1].textContent;
+  value = tableraiting.children[0].children[i].children[1].textContent;
   proc = (value/porog)*100;
-  document.body.children[3].children[0].children[i].bgColor=Color(proc);
+  tableraiting.children[0].children[i].bgColor=Color(proc);
 
 
 }

@@ -38,5 +38,7 @@ class DataForm(forms.Form):
 		self.fields["airPd_value"].widget.attrs['style'] = "width:60px"
 		self.fields["airVent_value"].widget.attrs['style'] = "width:60px"
 
+		
+
 class SerchForm(forms.Form):
-	 equipment = forms.ModelChoiceField(label='Оборудование', queryset=Equipment.objects.all().order_by('equipment_name'))
+	 equipment = forms.ModelChoiceField( queryset=Equipment.objects.all().order_by('equipment_name'))

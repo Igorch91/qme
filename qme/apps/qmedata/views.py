@@ -11,7 +11,7 @@ from django.utils.timezone import now
 # Create your views here.
 def index(request):
 	
-	return redirect('all')
+	return redirect('firstday')
 
 
 def all(request):
@@ -94,9 +94,15 @@ def comparision(data_equipment):
 		if difference > Deviations.objects.get(pk=1).dev_sig_pd:
 			rating = rating + 1
 	if data_equipment.equipment.type_equipment == 'Filter':
+
 		difference = abs(round(float(data_equipment.airPD) - Calibr.objects.get(calibr_name="PD filter").value_calibr,0 ))
-		if difference > Deviations.objects.get(pk=1).dev_fil_pd:
-			rating = rating + 1
+		if difference < 122:
+			if difference > Deviations.objects.get(pk=1).dev_fil_pd:
+				rating = rating + 1
+		else:
+			difference = abs(round(float(data_equipment.airPD) - Calibr.objects.get(calibr_name="HighPD").value_calibr,0 ))
+			if difference > Deviations.objects.get(pk=1).dev_fil_pd:
+				rating = rating + 1
 
 	if data_equipment.airVent != None:
 		difference = abs(round(float(data_equipment.airVent) - Calibr.objects.get(calibr_name="Vent").value_calibr,1 ))
@@ -119,7 +125,8 @@ def firstday(request):
 		if request.method == 'GET':
 			a='First'
 			context = show(a)
-			return render(request, 'qmedata/list.html',{'context':context})
+			text="первый день"
+			return render(request, 'qmedata/list.html',{'context':context, 'text':text})
 	else:
 		return redirect('/accounts/login/')
 	if request.method == 'POST':
@@ -133,7 +140,8 @@ def secondday(request):
 		if request.method == 'GET':
 			a='Second'
 			context = show(a)
-			return render(request, 'qmedata/list.html',{'context':context})
+			text="второй день"
+			return render(request, 'qmedata/list.html',{'context':context, 'text':text})
 	else:
 		return redirect('/accounts/login/')
 	if request.method == 'POST':
@@ -153,13 +161,13 @@ def dataview(request):
 		index_equipment_dict =request.POST.dict()
 		index_equipment = index_equipment_dict.get('equipment')
 
-		form_data = Measurements.objects.filter(equipment=index_equipment).order_by('-data_messure').order_by('-time_messure')
+		form_data = Measurements.objects.filter(equipment=index_equipment).order_by('-data_messure')
 						
 
-		messages.success(request, 'Данные представлены')
+		#messages.success(request, 'Данные представлены')
 		
 		
-		return render(request, 'qmedata/dataview.html', {'Message':Message, 'form':form, 'form_data':form_data})
+		return render(request, 'qmedata/dataview.html', {'form':form, 'form_data':form_data})
 		#return redirect(reverse('dataview'))
 	
 	

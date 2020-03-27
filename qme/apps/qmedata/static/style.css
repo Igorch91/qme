@@ -1,0 +1,82 @@
+.divhead {
+    height: 70px;
+    text-align: center;
+    font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
+    font-size: 50px;
+    
+	
+}
+	
+
+.leftcolon{
+	float:left;
+	width:250px;
+}
+
+.rightcolon
+{
+    
+    width: 100%;
+    margin-left: 300px;
+    margin-top: 30px;
+    background-color: #6BDB9E;
+    border-radius: 30px;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.widget {
+  padding: 20px 30px;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+	position:fixed;
+}
+.widget-title {
+  
+  letter-spacing: 2px;
+  color: #222;
+  font-size: 16px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+  border-left: 2px solid #b99d61;
+}
+.widget-list {
+  padding: 0;
+  list-style: none;
+}
+.widget-list a:before {
+  content: "\2014";
+  margin-right: 14px;
+}
+.widget-list a {
+  text-decoration: none;
+  outline: none;
+  display: block;
+  padding: 6px 0; 
+  letter-spacing: 1px;
+  font-weight: 300;
+  color: #444;
+  
+}
+
+.widget-list a:hover {color: #b99d61;}
+
+
+
+
+.button7 {
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+  margin-left:30px;
+} 
+.button7:hover { background: rgb(53, 167, 110); }
+.button7:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}

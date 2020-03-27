@@ -4,29 +4,46 @@
 
 {% block content %}
 {% csrf_token %}
+{% load static %}
 
-<div style="display:inline-block">
-<form action="/qmedata">
-	<button type="submit">Таблица для заполнения</button>
-</form>
-</div>
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+<div class="divhead">QME PORTAL</div>
 
-<div style="display:inline-block">
-  <form action="rating">
+<div class="leftcolon">	
+<div class="widget">
+  <h3 class="widget-title">Меню:</h3>
+  <ul class="widget-list">
+    <li><a href="">Список стоек</a></li>
     
-    
-  <button type="submit">Антирейтинг</button>
-</form>
+    <li><a href="firstday">Калибровка</a></li>
+    <li><a href="dataview">База данных</a></li>
+    <li><a href="rating">Антирейтинг</a></li>
+   
+  </ul>
+  {% if user.is_authenticated %}
+  <h3 class="widget-title">Пользователь:</h3>
+  <ul class="widget-list">
+    <li><a href="">{{user.get_username}}</a></li>
+    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li> 
+  </ul>
+  {% endif %} 
 </div>
+</div>
+	
+<div class ="rightcolon">
+	<h2 style="padding-left: 50px;
+padding-top: 50px">База данных:{{form_data.1.equipment}}</h2>
 
 <form method="post">
 {% csrf_token %}
-{{form}}
-<input type="submit"  value = "Поиск">
+<h3 style="padding-left:30px">Оборудование: {{form.equipment}} <input class="button7" type="submit"  value = "Поиск"></h3>
+
+
 </form>
+
 {% if form_data %}
-<table>
-	<caption><h1>{{form_data.1.equipment}}</h1></caption>
+<table id = "table" style="padding-left: 30px; padding-top:10px">
+	
 <tr><th>Вес</th><th>Дл.окр.№1</th><th>Дл.окр.№2</th><th>PD</th><th>Vent</th><th>Дата</th><th>Время</th><th>Специалист</th>
 
 {% for e in form_data %}
@@ -52,22 +69,16 @@
 </table>
 
 
+
 {% endif %}
 
-{% if user.is_authenticated %}
-     <li>Пользователь: {{ user.get_username }}</li>
-     <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>   
-   {% else %}
-     <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>   
-   {% endif %} 
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+
+
+
+
+	
+</div>
 
 <div align = "center">
  
@@ -75,4 +86,26 @@
   <address>igor.chesnov@jti.com</address>
 
 </div>
+	
+
+
+
+
+
+<script>
+trcolor=table.children[0];
+
+for (let i=1; i<trcolor.childElementCount; i++)
+
+{
+trcolor.children[i].bgColor="MediumSeaGreen";
+i++;
+
+}
+</script>
+
+
+
+
+
  {% endblock %}

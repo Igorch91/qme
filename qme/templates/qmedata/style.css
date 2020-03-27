@@ -1,0 +1,60 @@
+.divhead {
+    height: 70px;
+    text-align: center;
+    font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
+    font-size: 50px;
+    
+	
+}
+	
+
+.leftcolon{
+	float:left;
+	width:250px;
+}
+
+.rightcolon
+{
+    height: 1000px;
+    width: 80%;
+    margin-left: 300px;
+    margin-top: 30px;
+    background-color: #6BDB9E;
+    border-radius: 20%;
+    position: relative;
+}
+
+.widget {
+  padding: 20px 30px;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+	position:fixed;
+}
+.widget-title {
+  
+  letter-spacing: 2px;
+  color: #222;
+  font-size: 16px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+  border-left: 2px solid #b99d61;
+}
+.widget-list {
+  padding: 0;
+  list-style: none;
+}
+.widget-list a:before {
+  content: "\2014";
+  margin-right: 14px;
+}
+.widget-list a {
+  text-decoration: none;
+  outline: none;
+  display: block;
+  padding: 6px 0; 
+  letter-spacing: 1px;
+  font-weight: 300;
+  color: #444;
+  
+}
+.widget-list a:hover {color: #b99d61;}
