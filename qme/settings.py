@@ -13,8 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os, sys
 import mimetypes
 
-mimetypes.add_type("text/css", ".css", True)
-print(mimetypes.add_type("text/css", ".css", True))
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +30,7 @@ SECRET_KEY = '6son420+1c3-0t&2=r-urzivc-*7+vcq9k9z3=3pv3q00=x_*0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['igorch91.pythonanywhere.com']
 
 
 # Application definition
@@ -126,8 +125,12 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/qmedata/static/'
+#STATIC_ROOT = '/home/Igorch91/igorch91.pythonanywhere.com/static/'
+STATIC_URL = '/static/'
+
 
 
 LOGIN_REDIRECT_URL = '/qmedata/'
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
