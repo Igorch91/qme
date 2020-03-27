@@ -9,30 +9,30 @@
 <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 <div class="divhead">QME PORTAL</div>
 
-<div class="leftcolon">	
+<div class="leftcolon">
 <div class="widget">
   <h3 class="widget-title">Меню:</h3>
   <ul class="widget-list">
     <li><a href="">Список стоек</a></li>
-    
+
     <li><a href="firstday">Калибровка</a></li>
     <li><a href="dataview">База данных</a></li>
     <li><a href="rating">Антирейтинг</a></li>
-   
+
   </ul>
   {% if user.is_authenticated %}
   <h3 class="widget-title">Пользователь:</h3>
   <ul class="widget-list">
     <li><a href="">{{user.get_username}}</a></li>
-    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li> 
+    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
   </ul>
-  {% endif %} 
+  {% endif %}
 </div>
 </div>
-	
+
 <div class ="rightcolon">
 	<h2 style="padding-left: 50px;
-padding-top: 50px">База данных:{{form_data.1.equipment}}</h2>
+padding-top: 50px">База данных:{{form_data.0.equipment}}</h2>
 
 <form method="post">
 {% csrf_token %}
@@ -43,12 +43,12 @@ padding-top: 50px">База данных:{{form_data.1.equipment}}</h2>
 
 {% if form_data %}
 <table id = "table" style="padding-left: 30px; padding-top:10px">
-	
+
 <tr><th>Вес</th><th>Дл.окр.№1</th><th>Дл.окр.№2</th><th>PD</th><th>Vent</th><th>Дата</th><th>Время</th><th>Специалист</th>
 
 {% for e in form_data %}
 	<tr>
-		
+
 		<td>{{e.weight}}</td>
 		<td>{{e.size_one}}</td>
 		<td>{{e.size_two}}</td>
@@ -59,11 +59,11 @@ padding-top: 50px">База данных:{{form_data.1.equipment}}</h2>
 		<td>{{e.name_user}}</td>
 
 
-		
-				
+
+
 	</tr>
 	{% endfor %}
-	
+
 
 
 </table>
@@ -77,16 +77,16 @@ padding-top: 50px">База данных:{{form_data.1.equipment}}</h2>
 
 
 
-	
+
 </div>
 
 <div align = "center">
- 
+
   <p>Designed by Igor Chesnov</p>
   <address>igor.chesnov@jti.com</address>
 
 </div>
-	
+
 
 
 
