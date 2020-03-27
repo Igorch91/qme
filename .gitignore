@@ -1,9 +1,5 @@
 db.sqlite3
-<<<<<<< HEAD
-
 __pycache__
-
-=======
-__pycache__
->>>>>>> 03f800c7f76ec4aecdada93595ba21e33bbe2476
 /static
+qme/settings.py
+
