@@ -3,10 +3,10 @@
     text-align: center;
     font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
     font-size: 50px;
-    
-	
+
+
 }
-	
+
 
 .leftcolon{
 	float:left;
@@ -15,9 +15,9 @@
 
 .rightcolon
 {
-    
+
     width: 100%;
-    margin-left: 300px;
+    margin-left: 221px;
     margin-top: 30px;
     background-color: #6BDB9E;
     border-radius: 30px;
@@ -32,7 +32,7 @@
 	position:fixed;
 }
 .widget-title {
-  
+
   letter-spacing: 2px;
   color: #222;
   font-size: 16px;
@@ -52,11 +52,11 @@
   text-decoration: none;
   outline: none;
   display: block;
-  padding: 6px 0; 
+  padding: 6px 0;
   letter-spacing: 1px;
   font-weight: 300;
   color: #444;
-  
+
 }
 
 .widget-list a:hover {color: #b99d61;}
@@ -74,7 +74,7 @@
   box-shadow: 0 -3px rgb(53,167,110) inset;
   transition: 0.2s;
   margin-left:30px;
-} 
+}
 .button7:hover { background: rgb(53, 167, 110); }
 .button7:active {
   background: rgb(33,147,90);
