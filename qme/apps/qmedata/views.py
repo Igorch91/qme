@@ -18,7 +18,7 @@ def all(request):
 	if request.user.is_authenticated == True:
 		if request.method == 'GET':
 			context = show(None)
-			return render(request, 'qmedata/list.html',{'context':context})
+			return render(request, 'qmedata/listqme.html',{'context':context})
 	else:
 		return redirect('/accounts/login/')
 	if request.method == 'POST':

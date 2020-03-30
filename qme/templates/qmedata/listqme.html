@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Измерительное оборудование {% endblock %}
+
+{% block content %}
+
+
+<div class ="rightcolon">
+	<h2 style="padding-left: 50px;
+padding-top: 50px">Список оборудования:{{text}}</h2>
+
+
+
+
+
+<form method="post">
+{% csrf_token %}
+<input type = "hidden" name="data" value ="Save">
+
+
+<table id = "table" style="padding-left: 30px; padding-top:30px">
+<tr><th>Оборудование</th></tr>
+{% for e in context %}
+<tr  height ="35">
+  <td>{{e.equipment_name.label}}</td>
+
+
+</tr>
+{% endfor %}
+
+</table>
+<input type="submit"  value = "Сохранить" style="margin-left: 30px">
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</div>
+
+
+
+
+
+{% endblock %}

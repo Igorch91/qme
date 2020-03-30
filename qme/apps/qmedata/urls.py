@@ -9,5 +9,6 @@ urlpatterns = [
 	path('dataview' ,views.dataview, name = 'dataview'),
 	path('firstday' ,views.firstday, name = 'firstday'),
 	path('secondday' ,views.secondday, name = 'secondday'),
-	path('rating' ,views.rating, name = 'rating')
+	path('rating' ,views.rating, name = 'rating'),
+	path('listqme',views.all, name = 'listqme')
 ]

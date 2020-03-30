@@ -5,9 +5,49 @@
 	<title>{% block title %} Приложение {% endblock %}</title>
 </head>
 <body>
-	
-{% block content %}{% endblock %}
 
+{% csrf_token %}
+{% load static %}
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+ 
+<div class="divhead">QME PORTAL</div>
+ {% if user.is_authenticated %}
+
+
+<div class="leftcolon">
+<div class="widget">
+  <h3 class="widget-title">Меню:</h3>
+  <ul class="widget-list">
+    <li><a href="listqme">Список стоек</a></li>
+
+    <li><a href="firstday">Калибровка</a></li>
+    <li><a href="dataview">База данных</a></li>
+    <li><a href="rating">Антирейтинг</a></li>
+
+  </ul>
+
+  <h3 class="widget-title">Пользователь:</h3>
+  <ul class="widget-list">
+    <li><a href="">{{user.get_username}}</a></li>
+    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
+  </ul>
+  {% endif %}
+</div>
+</div>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+
+<div align = "center">
+
+  <p>Designed by Igor Chesnov</p>
+  <address>igor.chesnov@jti.com</address>
+
+</div>
 
 </body>
 </html>
