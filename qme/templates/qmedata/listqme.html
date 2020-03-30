@@ -11,37 +11,102 @@ padding-top: 50px">Список оборудования:{{text}}</h2>
 
 
 
+<label style = "margin-left:30px">Поиск</label>
+
+<input type = "text" id = "elastic" >
 
 
-<form method="post">
-{% csrf_token %}
-<input type = "hidden" name="data" value ="Save">
-
-
-<table id = "table" style="padding-left: 30px; padding-top:30px">
-<tr><th>Оборудование</th></tr>
+<table class = "table" id = "table" style="padding-left: 30px; padding-top:30px">
+<tr class = "first_tr"><th>Оборудование</th><th>Тип</th></tr>
 {% for e in context %}
 <tr  height ="35">
-  <td>{{e.equipment_name.label}}</td>
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.equipment_name}}</td>
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.type_equipment}}</td>
 
 
 </tr>
 {% endfor %}
 
 </table>
-<input type="submit"  value = "Сохранить" style="margin-left: 30px">
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<p id = "not" class = "hide" style="margin-left:50px">Совпадений не найдено</p>
+
+
 
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+  
+$(document).ready(function(){
+  $("table tr:not(.first_tr)").hover(function(){
+    this.style.backgroundColor="MediumSeaGreen";
+    console.log(this.children[0].innerText)},
+    function(){
+      this.style.backgroundColor=""});
+    
+
+    });
+
+alllist = document.querySelectorAll('.table tr:not(.first_tr)').length;
+
+document.querySelector('#elastic').oninput=function()
+{
+
+  let val = this.value.toUpperCase();
+    
+  let elasticItems = document.querySelectorAll('.table tr:not(.first_tr)');
+
+  if (val != ''){
+    elasticItems.forEach(function(elem) {
+      if (elem.children[0].innerText.search(val)==-1)
+      {
+        elem.classList.add('hide');
+
+      }
+      else {
+        elem.classList.remove('hide');
+
+
+
+      }
+    })}
+
+    else 
+    {
+      elasticItems.forEach(function(elem) {
+        elem.classList.remove('hide');
+      }
+    )
+    }
+ 
+ 
+list = document.querySelectorAll('.table tr.hide').length;
+
+  if (list == alllist)
+
+  {
+
+    document.getElementById('not').classList.remove('hide');
+  }
+  else
+
+    document.getElementById('not').classList.add('hide');
+
+  };
+ 
+
+  
+
+
+
+
+
+
+
+
+</script>
 
 
 

@@ -58,3 +58,15 @@
   
 }
 .widget-list a:hover {color: #b99d61;}
+
+
+.tdnonactive {
+  user-select:none;
+  
+}
+
+.table tr.hide
+
+{
+  display: none;
+}

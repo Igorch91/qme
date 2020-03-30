@@ -194,7 +194,8 @@ def show(a):
 	#print(a)
 	if a == None:
 		list_equipment = Equipment.objects.all().order_by('equipment_name')
+		context = list_equipment
 	else:
 		list_equipment = Equipment.objects.filter(place_equipment=a).order_by('equipment_name')
-	context = [DataForm(x, x.id) for x in list_equipment]
+		context = [DataForm(x, x.id) for x in list_equipment]
 	return (context)

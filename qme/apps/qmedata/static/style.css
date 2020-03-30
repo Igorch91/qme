@@ -80,3 +80,18 @@
   background: rgb(33,147,90);
   box-shadow: 0 3px rgb(33,147,90) inset;
 }
+
+.tdnonactive {
+  
+  -moz-user-select: none;
+   -webkit-user-select: none;
+    -ms-user-select:none;
+     user-select:none;
+     -o-user-select:none;
+}
+
+.hide
+
+{
+  display: none;
+}
