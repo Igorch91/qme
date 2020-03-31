@@ -5,21 +5,27 @@
 {% block content %}
 
 <div class ="rightcolon">
-	<h2 style="padding-left: 50px;
+<h2 style="padding-left: 50px;
 padding-top: 50px">Калибровка:{{text}}</h2>
 
 
 <a href="firstday" class="button7">Первый калибровочный день</a>
 <a href="secondday" class="button7">Второй калибровочный день</a>
 
+<h3></h3>
+<label style = "padding-left:30px">Поиск</label>
+<input type = "text" id = "elastic" >
+
+
+
 
 <form method="post">
 {% csrf_token %}
-<input type = "hidden" name="data" value ="Save">
 
 
-<table id = "table" style="padding-left: 30px; padding-top:30px">
-<tr><th>Оборудование</th><th>Вес</th><th>Дл. окр. №1</th><th>Дл. окр. №2</th><th>PD</th><th>Vent</th><th>Отключена</th></tr>
+
+<table  id = "table" style="padding-left: 30px; padding-top:10px">
+<tr class = "first_tr"><th>Оборудование</th><th>Вес</th><th>Дл. окр. №1</th><th>Дл. окр. №2</th><th>PD</th><th>Vent</th><th>Отключена</th></tr>
 {% for e in context %}
 <tr  height ="35">
   <td>{{e.equipment_name.label}}{{e.equipment_name.as_hidden}}</td>
@@ -33,7 +39,11 @@ padding-top: 50px">Калибровка:{{text}}</h2>
 {% endfor %}
 
 </table>
-<input type="submit"  value = "Сохранить" style="margin-left: 30px">
+<input id="save1" type="submit"  value = "Сохранить" style="margin-left: 30px" >
+
+</form>
+
+<p id = "not" class = "hide" style="margin-left:50px">Совпадений не найдено</p>
 
 {% if messages %}
 <ul class="messages">
@@ -109,8 +119,81 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+  $("#elastic").hover(function(){
+    $(this).select();
+    }, function(){
+      $(this).blur();
+    })
+});
 
 
+alllist = document.querySelectorAll('#table tr:not(.first_tr)').length;
+
+document.querySelector('#elastic').oninput=function()
+{
+
+console.log("Я сработала")
+  let val = this.value.toUpperCase();
+    
+  let elasticItems = document.querySelectorAll('#table tr:not(.first_tr)');
+
+  
+  if (val != ''){
+    elasticItems.forEach(function(elem) {
+      if (elem.children[0].innerText.search(val)==-1)
+      {
+        elem.classList.add('disabledserch');
+        td = elem.querySelectorAll('td');
+        td.forEach(function(elem){
+
+          elem.children[0].disabled = true;
+        })
+
+        
+      }
+      else {
+        elem.classList.remove('disabledserch');
+        td = elem.querySelectorAll('td');
+        td.forEach(function(elem){
+
+          elem.children[0].disabled = false;
+        })
+      }
+    })}
+    else 
+    {
+      elasticItems.forEach(function(elem) {
+        elem.classList.remove('disabledserch');
+        alltd = elem.parentNode.querySelectorAll('td');
+        alltd.forEach(function(elem){
+
+          elem.children[0].disabled = false;
+        })
+
+      }
+    )
+    }
+ 
+ list = document.querySelectorAll('#table tr.disabledserch').length;
+ 
+  if (list == alllist)
+  {
+    document.getElementById('not').classList.remove('hide');
+    document.getElementById('save1').classList.add('hide');
+    console.log("Список пуст");
+
+  }
+  else
+  {
+    document.getElementById('not').classList.add('hide');
+    document.getElementById('save1').classList.remove('hide');
+    console.log("Что-то есть");
+}
+
+
+      
+  };
 
 
 

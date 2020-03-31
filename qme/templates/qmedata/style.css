@@ -65,8 +65,17 @@
   
 }
 
-.table tr.hide
+.hide
 
 {
   display: none;
+}
+
+.disabledserch
+
+{
+
+  display:none;
+  disabled:true;
+
 }

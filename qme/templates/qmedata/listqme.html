@@ -11,9 +11,10 @@ padding-top: 50px">Список оборудования:{{text}}</h2>
 
 
 
-<label style = "margin-left:30px">Поиск</label>
+<label style = "margin-left:30px ">Поиск</label>
 
 <input type = "text" id = "elastic" >
+
 
 
 <table class = "table" id = "table" style="padding-left: 30px; padding-top:30px">
@@ -63,16 +64,11 @@ document.querySelector('#elastic').oninput=function()
       if (elem.children[0].innerText.search(val)==-1)
       {
         elem.classList.add('hide');
-
       }
       else {
         elem.classList.remove('hide');
-
-
-
       }
     })}
-
     else 
     {
       elasticItems.forEach(function(elem) {
@@ -80,20 +76,15 @@ document.querySelector('#elastic').oninput=function()
       }
     )
     }
- 
- 
-list = document.querySelectorAll('.table tr.hide').length;
-
+ list = document.querySelectorAll('.table tr.hide').length;
   if (list == alllist)
-
   {
-
     document.getElementById('not').classList.remove('hide');
   }
-  else
-
+  else{
+    
     document.getElementById('not').classList.add('hide');
-
+  }
   };
  
 

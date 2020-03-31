@@ -95,3 +95,12 @@
 {
   display: none;
 }
+
+.disabledserch
+
+{
+
+  display:none;
+  disabled:true;
+
+}
