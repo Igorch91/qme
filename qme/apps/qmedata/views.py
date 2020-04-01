@@ -199,3 +199,10 @@ def show(a):
 		list_equipment = Equipment.objects.filter(place_equipment=a).order_by('equipment_name')
 		context = [DataForm(x, x.id) for x in list_equipment]
 	return (context)
+
+
+def selectqme(request):
+	selectqme = request.get_full_path()[9::]
+	
+	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme})
+

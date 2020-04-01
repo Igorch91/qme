@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 
 from . import views
 
@@ -10,5 +10,6 @@ urlpatterns = [
 	path('firstday' ,views.firstday, name = 'firstday'),
 	path('secondday' ,views.secondday, name = 'secondday'),
 	path('rating' ,views.rating, name = 'rating'),
-	path('listqme',views.all, name = 'listqme')
+	path('listqme',views.all, name = 'listqme'),
+	re_path(r'[A-Z&_&0-9]{6,}$', views.selectqme, name ='link')
 ]
