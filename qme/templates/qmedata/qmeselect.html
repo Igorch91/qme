@@ -1,17 +1,59 @@
-{% extends 'base.html' %}
+{% extends 'baseselectqme.html' %}
 
 {% block title %} Измерительное оборудование {% endblock %}
 
 {% block content %}
 
-<div class ="rightcolon">
+<div class ="rightcolon" style = "background-color: #AFEEEE">
 	
 <h2 style="padding-left: 50px;
-padding-top: 50px">{{qmename}}</h2>
+padding-top: 50px">Список ремонтов:</h2>
+
+<table class = "table" id = "table" style="padding-left: 30px; padding-top:0px">
+<tr class = "first_tr"><th>Дата</th><th>Проблема</th><th>Описание</th><th>Специалист</th></tr>
+{% for e in list_service %}
+<tr  height ="35">
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none; width:130px">{{e.data_messure}}<a id="golink" href = "" class="hide"></a></td>
+  
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;width:100px">{{e.name_problem}}</td>
+
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;width:600px">{{e.description_service}}</td>
+
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.name_user}}</td>
 
 
+
+
+
+
+</tr>
+
+{% endfor %}
+</table>
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+
+
+ $(document).ready(function(){
+
+  $("table tr:not(.first_tr)").hover(function(){
+    this.style.backgroundColor="#40E0D0";
+    },
+    function(){
+      this.style.backgroundColor=""});
+    
+
+    });
+
+ 
+
+
+
+ </script>
 
  {% endblock %}
+
+

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .forms import DataForm, SerchForm
-from .models import Equipment, Measurements, Calibr, Deviations
+from .models import Equipment, Measurements, Calibr, Deviations, Service
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.formats import sanitize_separators
@@ -11,7 +11,7 @@ from django.utils.timezone import now
 # Create your views here.
 def index(request):
 	
-	return redirect('firstday')
+	return redirect('all')
 
 
 def all(request):
@@ -191,9 +191,23 @@ def rating(request):
 
 
 def show(a):
-	#print(a)
+	
+	
 	if a == None:
+		
+		
+		
+		for b in Equipment.objects.all():
+			if b.count_service != Equipment.objects.filter(service__equipment=b.id).count():		
+				b.count_service = Equipment.objects.filter(service__equipment=b.id).count()		
+				
+				b.save()
+		
+
 		list_equipment = Equipment.objects.all().order_by('equipment_name')
+
+
+		
 		context = list_equipment
 	else:
 		list_equipment = Equipment.objects.filter(place_equipment=a).order_by('equipment_name')
@@ -203,6 +217,7 @@ def show(a):
 
 def selectqme(request):
 	selectqme = request.get_full_path()[9::]
-	
-	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme})
+	#Equipment.objcets.only('selectqme')
+	list_service = Service.objects.filter(equipment=Equipment.objects.get(equipment_name=selectqme))
+	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme, 'list_service':list_service})
 

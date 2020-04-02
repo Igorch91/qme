@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang-"ru">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %} Приложение {% endblock %}</title>
+</head>
+<body>
+
+{% csrf_token %}
+{% load static %}
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+ 
+<div class="divhead">QME PORTAL</div>
+ {% if user.is_authenticated %}
+
+
+<div class="leftcolon">
+<div class="widget">
+  <h3 class="widget-title">{{qmename}}</h3>
+  <ul class="widget-list">
+    <li><a href="">Ремонт</a></li>
+    <li><a href="">Запчасти</a></li>
+
+
+   
+
+  </ul>
+
+  <h3 class="widget-title">Пользователь:</h3>
+  <ul class="widget-list">
+    <li><a href="">{{user.get_username}}</a></li>
+    
+  </ul>
+  {% endif %}
+</div>
+</div>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+
+<div align = "center">
+
+  <p>Designed by Igor Chesnov</p>
+  <address>igor.chesnov@jti.com</address>
+
+</div>
+
+</body>
+
+</html>

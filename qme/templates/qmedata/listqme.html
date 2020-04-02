@@ -18,11 +18,12 @@ padding-top: 50px">Список оборудования:{{text}}</h2>
 
 
 <table class = "table" id = "table" style="padding-left: 30px; padding-top:30px">
-<tr class = "first_tr"><th>Оборудование</th><th>Тип</th></tr>
+<tr class = "first_tr"><th>Оборудование</th><th>Тип</th><th>Ремонты</th></tr>
 {% for e in context %}
 <tr  height ="35">
-  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"><a id="golink" href = "{{e.equipment_name}}" class="hide"></a>{{e.equipment_name}}</td>
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none "><a id="golink" href = "{{e.equipment_name}} " class="hide"></a>{{e.equipment_name}}</td>
   <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.type_equipment}}</td>
+    <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.count_service}}</td>
 
 
 </tr>
@@ -61,7 +62,6 @@ window.open(
 
 
 });
-
 
 
 
