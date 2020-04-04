@@ -195,16 +195,17 @@ def show(a):
 	
 	if a == None:
 		
-		
+	
 		
 		for b in Equipment.objects.all():
 			if b.count_service != Equipment.objects.filter(service__equipment=b.id).count():		
 				b.count_service = Equipment.objects.filter(service__equipment=b.id).count()		
 				
 				b.save()
+
 		
 
-		list_equipment = Equipment.objects.all().order_by('equipment_name')
+		list_equipment = Equipment.objects.all().order_by('-no_workability', 'equipment_name',)
 
 
 		
@@ -215,9 +216,20 @@ def show(a):
 	return (context)
 
 
-def selectqme(request):
-	selectqme = request.get_full_path()[9::]
+def selectqme(request, name):
+	selectqme = name
 	#Equipment.objcets.only('selectqme')
-	list_service = Service.objects.filter(equipment=Equipment.objects.get(equipment_name=selectqme))
-	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme, 'list_service':list_service})
+	
 
+	objects_qme = Equipment.objects.get(equipment_name=selectqme)
+	list_service = Service.objects.filter(equipment=Equipment.objects.get(equipment_name=selectqme))
+	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme, 'list_service':list_service, 'qme':objects_qme})
+
+
+
+
+
+def newservice(request, nameservice):
+	selectqme = nameservice
+	print(selectqme)
+	return render(request, 'qmedata/editservice.html')

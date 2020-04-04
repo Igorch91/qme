@@ -11,6 +11,8 @@ class Equipment(models.Model):
 	place_equipment = models.CharField('Калибровочный день', max_length=30, choices=place_equipment_choices)
 	rating = models.IntegerField(default=0)
 	count_service = models.IntegerField(default=0)
+	no_workability = models.BooleanField(default=False)
+
 
 	def __str__(self):
 		return self.equipment_name

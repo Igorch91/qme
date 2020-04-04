@@ -1,7 +1,13 @@
-from django.urls import path,re_path
+from django.urls import path,re_path, include
 
 from . import views
 
+urlqme = [
+path('', views.all, name = 'listqme'),
+re_path(r'(?P<name>[A-Z][^/]+)$', views.selectqme, name ='link'),
+re_path(r'(?P<nameservice>[A-Z][^/]+)/new', views.newservice, name ='newservice')
+
+]
 
 urlpatterns = [
 	path('', views.index, name = 'firstday'),
@@ -10,6 +16,7 @@ urlpatterns = [
 	path('firstday' ,views.firstday, name = 'firstday'),
 	path('secondday' ,views.secondday, name = 'secondday'),
 	path('rating' ,views.rating, name = 'rating'),
-	path('listqme',views.all, name = 'listqme'),
-	re_path(r'[A-Z&_&0-9]{6,}$', views.selectqme, name ='link')
+
+	path('listqme/', include (urlqme))
+	
 ]

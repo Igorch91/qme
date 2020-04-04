@@ -1,6 +1,10 @@
 from django import forms
 from .models import Equipment,Calibr
 
+from django.forms import ModelForm
+
+
+
 class DataForm(forms.Form):
 
 	equipment_name = forms.CharField(max_length=30)

@@ -21,10 +21,12 @@ padding-top: 50px">Список оборудования:{{text}}</h2>
 <tr class = "first_tr"><th>Оборудование</th><th>Тип</th><th>Ремонты</th></tr>
 {% for e in context %}
 <tr  height ="35">
-  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none "><a id="golink" href = "{{e.equipment_name}} " class="hide"></a>{{e.equipment_name}}</td>
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none ">
+    <a id="golink" href = "{% url 'link' name=e.equipment_name %}" class="hide"></a>
+    <a id="no_workability" class = "hide">{{e.no_workability}}</a>
+      {{e.equipment_name}}</td>
   <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.type_equipment}}</td>
     <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">{{e.count_service}}</td>
-
 
 </tr>
 {% endfor %}
@@ -40,17 +42,45 @@ padding-top: 50px">Список оборудования:{{text}}</h2>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
+
+no_work=document.querySelectorAll('#no_workability');
+no_work.forEach(function(elem){
+  console.log(elem.innerText)
+  if (elem.innerText == "True")
+  {
+   elem.parentNode.parentNode.style.backgroundColor = "#E9967A";
+
+  }
+  else
+  {
+
+    elem.parentNode.parentNode.style.backgroundColor = "";
+  }
+})
+
+
+
+
 var qmeselection;  
 $(document).ready(function(){
 
   $("table tr:not(.first_tr)").hover(function(){
+    last = this.style.backgroundColor;
     this.style.backgroundColor="MediumSeaGreen";
     qmeselection=this.children[0].innerText},
     function(){
-      this.style.backgroundColor=""});
+      
+      
+      this.style.backgroundColor=last;
+    
+      
+
     
 
-    });
+    })});
+
+
+
 
 
 $( "table tr:not(.first_tr" ).dblclick(function() {
@@ -69,11 +99,8 @@ alllist = document.querySelectorAll('.table tr:not(.first_tr)').length;
 
 document.querySelector('#elastic').oninput=function()
 {
-
   let val = this.value.toUpperCase();
-    
   let elasticItems = document.querySelectorAll('.table tr:not(.first_tr)');
-
   if (val != ''){
     elasticItems.forEach(function(elem) {
       if (elem.children[0].innerText.search(val)==-1)

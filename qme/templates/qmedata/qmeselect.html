@@ -4,12 +4,12 @@
 
 {% block content %}
 
-<div class ="rightcolon" style = "background-color: #AFEEEE">
-	
+<div class ="rightcolon" style = "background-color: #AFEEEE;  padding-top:50px">
+	<a href="{% url 'newservice' nameservice=qme.equipment_name %}" class="button7" style="padding-top: 10px">Добавить новый ремонт</a>
 <h2 style="padding-left: 50px;
-padding-top: 50px">Список ремонтов:</h2>
+padding-top: 10px">Список ремонтов:</h2>
 
-<table class = "table" id = "table" style="padding-left: 30px; padding-top:0px">
+<table class = "table" id = "table" style="padding-left: 30px; padding-top:10px">
 <tr class = "first_tr"><th>Дата</th><th>Проблема</th><th>Описание</th><th>Специалист</th></tr>
 {% for e in list_service %}
 <tr  height ="35">
