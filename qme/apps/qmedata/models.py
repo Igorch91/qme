@@ -11,7 +11,7 @@ class Equipment(models.Model):
 	place_equipment = models.CharField('Калибровочный день', max_length=30, choices=place_equipment_choices)
 	rating = models.IntegerField(default=0)
 	count_service = models.IntegerField(default=0)
-	no_workability = models.BooleanField(default=False)
+	no_workability = models.BooleanField('Оборудование НE работоспособно?', default=False)
 
 
 	def __str__(self):
@@ -74,12 +74,12 @@ class Deviations(models.Model):
 
 class Service(models.Model):
 	equipment = models.ForeignKey(Equipment, on_delete = models.CASCADE)
-	name_problem = models.CharField('Проблема', max_length=100)
+	name_problem = models.CharField('Проблема, кратко', max_length=100)
 	description_service = models.CharField('Описание ремонта', max_length=1000)
 	spare_parts_required = models.CharField('Требующиеся запчасти', max_length=300 , blank = True)
-	it_is_no_ok = models.BooleanField()
+	it_is_no_ok = models.BooleanField('Проблема требует внимания?')
 	name_user = models.CharField(max_length=30)
-	data_messure = models.DateField()
+	data_messure = models.DateField('Дата')
 	
 	def __str__(self):
 		template = '{0.equipment} {0.name_problem}'
@@ -90,4 +90,5 @@ class Service(models.Model):
 	class Meta:
 		verbose_name = 'Сервис'
 		verbose_name_plural = 'Сервис'
-		
+
+

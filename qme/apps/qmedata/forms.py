@@ -1,5 +1,5 @@
 from django import forms
-from .models import Equipment,Calibr
+from .models import Equipment,Calibr, Service
 
 from django.forms import ModelForm
 
@@ -46,3 +46,31 @@ class DataForm(forms.Form):
 
 class SerchForm(forms.Form):
 	 equipment = forms.ModelChoiceField( queryset=Equipment.objects.all().order_by('equipment_name'))
+
+
+class DateInput(forms.DateInput):
+	input_type = 'date'
+
+
+class ServiceForm(forms.ModelForm):
+	
+	#checkin = forms.DateField(widget=DateInput())
+	class Meta:
+		model = Service
+		widgets = { 
+            'description_service': forms.Textarea(attrs={'rows':15, 'cols':53}),
+        	'spare_parts_required': forms.Textarea(attrs={'rows':5, 'cols':53}),
+        	'name_problem':forms.TextInput(attrs={'size':'61'}),
+        	'data_messure': DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+        } 
+
+
+
+		fields =['name_problem','description_service', 'spare_parts_required', 'it_is_no_ok', 'data_messure']
+		#['equipment','name_problem','description_service','spare_parts_required','it_is_no_ok','name_user','data_messure']
+
+class EquipmentForm(forms.ModelForm):
+	class Meta:
+		model = Equipment
+
+		fields = ['no_workability']

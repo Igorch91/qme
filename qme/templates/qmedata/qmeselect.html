@@ -5,7 +5,8 @@
 {% block content %}
 
 <div class ="rightcolon" style = "background-color: #AFEEEE;  padding-top:50px">
-	<a href="{% url 'newservice' nameservice=qme.equipment_name %}" class="button7" style="padding-top: 10px">Добавить новый ремонт</a>
+	<a id="button7" href="{% url 'newservice' nameservice=qme.equipment_name %}" class="button7" style="padding-top: 10px " onclick="event.preventDefault() ">Добавить новый ремонт</a>
+	<a id="button7" href="" class="button7" style="padding-top: 10px " >Обновить</a>
 <h2 style="padding-left: 50px;
 padding-top: 10px">Список ремонтов:</h2>
 
@@ -13,7 +14,12 @@ padding-top: 10px">Список ремонтов:</h2>
 <tr class = "first_tr"><th>Дата</th><th>Проблема</th><th>Описание</th><th>Специалист</th></tr>
 {% for e in list_service %}
 <tr  height ="35">
-  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none; width:130px">{{e.data_messure}}<a id="golink" href = "" class="hide"></a></td>
+  <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none; width:130px">{{e.data_messure}}
+
+  	<a id="golink" href = "{% url 'editservice' nameservice=qme.equipment_name service_id=e.id %}" class="hide"></a>
+  	<a id="it_is_no_ok" class = "hide">{{e.it_is_no_ok }}</a>
+
+  </td>
   
   <td class ="tdnonactive" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;width:100px">{{e.name_problem}}</td>
 
@@ -36,21 +42,52 @@ padding-top: 10px">Список ремонтов:</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
 
+no_solved=document.querySelectorAll('#it_is_no_ok');
+no_solved.forEach(function(elem){
+  console.log(elem.innerText)
+  if (elem.innerText == "True")
+  {
+   elem.parentNode.parentNode.style.backgroundColor = "#E9967A";
+
+  }
+  else
+  {
+
+    elem.parentNode.parentNode.style.backgroundColor = "";
+  }
+})
 
  $(document).ready(function(){
 
   $("table tr:not(.first_tr)").hover(function(){
-    this.style.backgroundColor="#40E0D0";
+    last = this.style.backgroundColor;
+    this.style.backgroundColor="#C0C0C0";
     },
     function(){
-      this.style.backgroundColor=""});
+      this.style.backgroundColor=last});
     
 
     });
 
- 
+ $( "#button7" ).click(function() {
+
+href=this.getAttribute('href');
+console.log("Нажали");
+window.open(
+  href, "_blank", "location=0, width=600, height=500 ").focus();
 
 
+});
+
+$( "table tr:not(.first_tr" ).dblclick(function() {
+
+href=this.children[0].children[0].getAttribute('href');
+
+window.open(
+  href, "_blank", "location=0, width=600, height=500 ").focus();
+
+
+});
 
  </script>
 

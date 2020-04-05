@@ -1,0 +1,37 @@
+
+
+ <html lang-"ru">
+<head>
+  <meta charset="UTF-8">
+
+  <title></title>
+</head>
+<body>
+
+{% load static %}
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+ 
+
+
+ <h2>Добавление ремонта для {{qme.equipment_name}}<h2>
+ 
+<form method="post" >
+  {% csrf_token %}
+  <table border="1">
+    {{ form }}
+    {{form_notwork}}
+  </table>
+  <button type="submit">Сохранить</button>
+</form>
+
+
+
+
+
+
+
+</div>
+
+</body>
+
+</html>

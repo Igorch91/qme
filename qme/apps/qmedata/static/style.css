@@ -75,11 +75,18 @@
   transition: 0.2s;
   margin-left:30px;
 }
+
+\
 .button7:hover { background: rgb(53, 167, 110); }
 .button7:active {
   background: rgb(33,147,90);
   box-shadow: 0 3px rgb(33,147,90) inset;
 }
+
+
+
+
+
 
 .tdnonactive {
   

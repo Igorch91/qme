@@ -1,18 +1,44 @@
-{% extends 'baseselectqme.html' %}
 
-{% block title %} Измерительное оборудование {% endblock %}
+ <html lang-"ru">
+<head>
+  <meta charset="UTF-8">
 
-{% block content %}
+  <title></title>
+</head>
+<body>
 
-<div class ="rightcolon" style = "background-color: #AFEEEE;  padding-top:50px">
-	<a href="" class="button7" style="padding-top: 10px">Добавить новый ремонт</a>
-<h2 style="padding-left: 50px;
-padding-top: 10px">емонт:</h2>
+{% load static %}
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+ 
 
 
+ <h2>Изменение описание ремонта для {{qme.equipment_name}}<h2>
+ 
+<form method="post" >
+  {% csrf_token %}
+  <table border="1">
+    {{ form }}
+    {{form_notwork}}
+  </table>
+  <button type="submit">Сохранить изменения</button>
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+<input  name = "delete" value="delete" class = "hide"></input>
+<button type="submit">Удалить ремонт</button>
+
+</form>
 
 </div>
 
+</body>
 
-
- {% endblock %}
+</html>

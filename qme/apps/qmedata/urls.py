@@ -1,12 +1,20 @@
 from django.urls import path,re_path, include
+from django.utils.timezone import now
 
 from . import views
+
+urlservice = [
+re_path(r'(?P<service_id>\d+)', views.editservice, name='editservice')
+
+
+	]
+
 
 urlqme = [
 path('', views.all, name = 'listqme'),
 re_path(r'(?P<name>[A-Z][^/]+)$', views.selectqme, name ='link'),
-re_path(r'(?P<nameservice>[A-Z][^/]+)/new', views.newservice, name ='newservice')
-
+re_path(r'(?P<nameservice>[A-Z][^/]+)/new', views.newservice, name ='newservice'),
+re_path(r'(?P<nameservice>[A-Z][^/]+)/', include (urlservice))
 ]
 
 urlpatterns = [

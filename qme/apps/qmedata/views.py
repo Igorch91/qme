@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .forms import DataForm, SerchForm
+from .forms import DataForm, SerchForm, ServiceForm, EquipmentForm
 from .models import Equipment, Measurements, Calibr, Deviations, Service
 from django.contrib import messages
 from django.urls import reverse
@@ -200,9 +200,9 @@ def show(a):
 		for b in Equipment.objects.all():
 			if b.count_service != Equipment.objects.filter(service__equipment=b.id).count():		
 				b.count_service = Equipment.objects.filter(service__equipment=b.id).count()		
-				
+			
 				b.save()
-
+			#print(Service.objects.filter(equipment=b.id).count())
 		
 
 		list_equipment = Equipment.objects.all().order_by('-no_workability', 'equipment_name',)
@@ -222,7 +222,7 @@ def selectqme(request, name):
 	
 
 	objects_qme = Equipment.objects.get(equipment_name=selectqme)
-	list_service = Service.objects.filter(equipment=Equipment.objects.get(equipment_name=selectqme))
+	list_service = Service.objects.filter(equipment=Equipment.objects.get(equipment_name=selectqme)).order_by('-data_messure')
 	return render(request, 'qmedata/qmeselect.html', {'qmename':selectqme, 'list_service':list_service, 'qme':objects_qme})
 
 
@@ -231,5 +231,65 @@ def selectqme(request, name):
 
 def newservice(request, nameservice):
 	selectqme = nameservice
-	print(selectqme)
-	return render(request, 'qmedata/editservice.html')
+	objects_qme = Equipment.objects.get(equipment_name=selectqme)
+	if request.user.is_authenticated == True:
+		if request.method == 'GET':
+		
+
+	
+	#form=ServiceForm()
+			form=ServiceForm()
+			form_notwork = EquipmentForm(initial={'no_workability':objects_qme.no_workability})
+			return render(request, 'qmedata/newservice.html', {'qme':objects_qme, 'form':form, 'form_notwork': form_notwork})
+		if request.method == 'POST':
+			
+			s=ServiceForm(request.POST)
+			data_service = s.save(commit=False)
+			data_service.equipment = objects_qme
+			data_service.name_user = request.user
+			data_service.save()
+			messages.success(request, 'Данные сохранены')
+
+			q=EquipmentForm(request.POST, instance = objects_qme )
+			q.save()
+		
+			return redirect('newservice', nameservice=selectqme)
+	else:
+		return redirect('/accounts/login/')	
+
+
+def editservice(request, nameservice, service_id):
+	
+	service_objects = Service.objects.get(pk = service_id)
+	objects_qme = Equipment.objects.get(equipment_name=service_objects.equipment)
+
+	if request.user.is_authenticated == True:
+		if request.method == 'GET':
+			#objects_qme = Equipment.objects.get(equipment_name=nameservice)
+			
+			
+			form=ServiceForm(instance = service_objects)
+			form_notwork = EquipmentForm(initial={'no_workability':objects_qme.no_workability})
+			return render(request, 'qmedata/editservice.html', {'form':form, 'form_notwork':form_notwork, 'qme':objects_qme, 'service':service_objects})
+		 
+
+
+
+		if request.method == 'POST':
+			if request.POST.getlist('delete') != ['delete']:
+				s=ServiceForm(request.POST, instance = service_objects)
+				s.save()
+				q=EquipmentForm(request.POST, instance = objects_qme )
+				q.save()
+				return redirect('editservice', nameservice=nameservice, service_id=service_id)
+			else:
+				print('Кнопка удить нажата')
+				service_objects.delete()
+				return redirect('newservice', nameservice=nameservice)
+			
+		
+
+			
+
+	else:
+		return redirect('/accounts/login/')	
