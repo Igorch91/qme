@@ -217,6 +217,9 @@ def show(a):
 
 
 def selectqme(request, name):
+	if request.method == 'POST':
+		print("Кнопка нажата")
+
 	selectqme = name
 	#Equipment.objcets.only('selectqme')
 	
@@ -281,11 +284,12 @@ def editservice(request, nameservice, service_id):
 				s.save()
 				q=EquipmentForm(request.POST, instance = objects_qme )
 				q.save()
+				messages.success(request, 'Данные сохранены')
 				return redirect('editservice', nameservice=nameservice, service_id=service_id)
 			else:
-				print('Кнопка удить нажата')
+				
 				service_objects.delete()
-				return redirect('newservice', nameservice=nameservice)
+			return redirect('newservice', nameservice=nameservice)
 			
 		
 
@@ -293,3 +297,10 @@ def editservice(request, nameservice, service_id):
 
 	else:
 		return redirect('/accounts/login/')	
+
+
+def allservice(request):
+
+	list_service = Service.objects.all().order_by('-it_is_no_ok', '-data_messure')
+
+	return render(request, 'qmedata/allservice.html', {'form':list_service})

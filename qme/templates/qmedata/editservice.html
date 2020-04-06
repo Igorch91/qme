@@ -13,7 +13,14 @@
 
 
  <h2>Изменение описание ремонта для {{qme.equipment_name}}<h2>
- 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <form method="post" >
   {% csrf_token %}
   <table border="1">
@@ -23,19 +30,15 @@
   <button type="submit">Сохранить изменения</button>
 </form>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form method="post">
+
+
+ <form method="post">
   {% csrf_token %}
 <input  name = "delete" value="delete" class = "hide"></input>
 <button type="submit">Удалить ремонт</button>
-
 </form>
+
+
 
 </div>
 

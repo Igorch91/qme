@@ -31,7 +31,6 @@ padding-top: 10px">Список ремонтов:</h2>
 
 
 
-
 </tr>
 
 {% endfor %}
@@ -72,14 +71,14 @@ no_solved.forEach(function(elem){
  $( "#button7" ).click(function() {
 
 href=this.getAttribute('href');
-console.log("Нажали");
+
 window.open(
   href, "_blank", "location=0, width=600, height=500 ").focus();
 
 
 });
 
-$( "table tr:not(.first_tr" ).dblclick(function() {
+$( "table tr:not(.first_tr)" ).dblclick(function() {
 
 href=this.children[0].children[0].getAttribute('href');
 
@@ -88,6 +87,18 @@ window.open(
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
  </script>
 

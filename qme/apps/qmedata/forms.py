@@ -60,7 +60,7 @@ class ServiceForm(forms.ModelForm):
 		widgets = { 
             'description_service': forms.Textarea(attrs={'rows':15, 'cols':53}),
         	'spare_parts_required': forms.Textarea(attrs={'rows':5, 'cols':53}),
-        	'name_problem':forms.TextInput(attrs={'size':'61'}),
+        	'name_problem':forms.TextInput(attrs={'size':'52'}),
         	'data_messure': DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
         } 
 

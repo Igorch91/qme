@@ -1,11 +1,11 @@
 from django.urls import path,re_path, include
-from django.utils.timezone import now
+
 
 from . import views
 
 urlservice = [
 re_path(r'(?P<service_id>\d+)', views.editservice, name='editservice')
-
+#re_path(r'(?P<delete_id>\d+)/delete', views.delete, name='delete')
 
 	]
 
@@ -13,6 +13,7 @@ re_path(r'(?P<service_id>\d+)', views.editservice, name='editservice')
 urlqme = [
 path('', views.all, name = 'listqme'),
 re_path(r'(?P<name>[A-Z][^/]+)$', views.selectqme, name ='link'),
+
 re_path(r'(?P<nameservice>[A-Z][^/]+)/new', views.newservice, name ='newservice'),
 re_path(r'(?P<nameservice>[A-Z][^/]+)/', include (urlservice))
 ]
@@ -24,7 +25,7 @@ urlpatterns = [
 	path('firstday' ,views.firstday, name = 'firstday'),
 	path('secondday' ,views.secondday, name = 'secondday'),
 	path('rating' ,views.rating, name = 'rating'),
-
+	path('allservice' ,views.allservice, name = 'allservice'),
 	path('listqme/', include (urlqme))
 	
 ]
