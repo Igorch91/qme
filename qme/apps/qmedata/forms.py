@@ -27,6 +27,7 @@ class DataForm(forms.Form):
 		if equipment.this_is_sdl == True:
 			self.fields["size_one_value"].initial=Calibr.objects.get(calibr_name="SizeSdl").value_calibr
 			self.fields["size_two_value"].initial=None
+			self.fields["size_two_value"].widget.attrs['class']="disabledforever"
 		else:
 			self.fields["size_one_value"].initial=Calibr.objects.get(calibr_name="SizeOne").value_calibr
 			self.fields["size_two_value"].initial=Calibr.objects.get(calibr_name="SizeTwo").value_calibr
@@ -39,6 +40,7 @@ class DataForm(forms.Form):
 			self.fields["airPd_value"].initial=Calibr.objects.get(calibr_name="PD filter").value_calibr
 			self.fields["airVent_value"].initial=None
 			self.fields["airVent_value"].disabled=True
+			self.fields["airVent_value"].widget.attrs['class']="disabledforever"
 		self.fields["airPd_value"].widget.attrs['style'] = "width:60px"
 		self.fields["airVent_value"].widget.attrs['style'] = "width:60px"
 

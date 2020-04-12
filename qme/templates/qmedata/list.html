@@ -144,20 +144,21 @@ console.log("Я сработала")
       if (elem.children[0].innerText.search(val)==-1)
       {
         elem.classList.add('disabledserch');
-        td = elem.querySelectorAll('td');
+        td = elem.querySelectorAll('input:not(.disabledforever)');
         td.forEach(function(elem){
 
-          elem.children[0].disabled = true;
+          
+          elem.disabled = true;
         })
 
         
       }
       else {
         elem.classList.remove('disabledserch');
-        td = elem.querySelectorAll('td');
+        td = elem.querySelectorAll('input:not(.disabledforever)');
         td.forEach(function(elem){
 
-          elem.children[0].disabled = false;
+          elem.disabled = false;
         })
       }
     })}
@@ -165,10 +166,10 @@ console.log("Я сработала")
     {
       elasticItems.forEach(function(elem) {
         elem.classList.remove('disabledserch');
-        alltd = elem.parentNode.querySelectorAll('td');
+        alltd = elem.parentNode.querySelectorAll('input:not(.disabledforever)');
         alltd.forEach(function(elem){
 
-          elem.children[0].disabled = false;
+          elem.disabled = false;
         })
 
       }
