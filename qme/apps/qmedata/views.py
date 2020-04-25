@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.utils.formats import sanitize_separators
 from django.utils.timezone import now
+from django.contrib.auth.middleware import RemoteUserMiddleware
 
 # Create your views here.
 def index(request):
@@ -18,6 +19,7 @@ def all(request):
 	if request.user.is_authenticated == True:
 		if request.method == 'GET':
 			context = show(None)
+			#print (request.META)
 			return render(request, 'qmedata/listqme.html',{'context':context})
 	else:
 		return redirect('/accounts/login/')
@@ -304,3 +306,10 @@ def allservice(request):
 	list_service = Service.objects.all().order_by('-it_is_no_ok', '-data_messure')
 
 	return render(request, 'qmedata/allservice.html', {'form':list_service})
+
+
+def test(request):
+	
+	
+	test = request.META
+	return render(request, 'qmedata/test.html', {'test':test})
