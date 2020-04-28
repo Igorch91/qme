@@ -28,5 +28,5 @@ urlpatterns = [
 	path('allservice' ,views.allservice, name = 'allservice'),
 	path('listqme/', include (urlqme)),
 	path('test', views.test, name = 'test')
-	
+
 ]

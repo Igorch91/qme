@@ -20,5 +20,5 @@ urlpatterns = [
     path('', include ('qmedata.urls')),
     path('admin/', admin.site.urls),
     path('qmedata/', include ('qmedata.urls')),
-    path('accounts/', include ('django.contrib.auth.urls')),
+    path('accounts/', include ('django.contrib.auth.urls'))
 ]
